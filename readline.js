@@ -5,16 +5,24 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+
+
 const firstAnswer = (answer) => {
-    console.log(`Welcome to Werewolf Tsukuyomi ` + answer);
-    if(answer === 'Kent') {
-        console.log(`As Kent you are the Werewolf`);
+    console.log(`Welcome to Werewolf Tsukuyomi ${answer}`);
+    console.log(`You are now bound to infinite Tsukuyomi until you complete your mission.`)
+
+    const role = randomizeRole();
+
+    console.log(`Your secret role is ${role}`);
+
+    if(role === 'Werewolf') {
+        console.log(`As ${answer}, ${role} your mission is to kill the rest of the villagers before they find out who you are.`);
         rl.question(`Do you accept this mission? (y/n) `, secondAnswerKent);
-    } else if(answer === 'Mong') {
-        console.log(`As Mong you are the Villager`);
+    } else if(role === 'Villager') {
+        console.log(`As ${answer}, ${role} your missing is to find out the werewolf bebfore they hava );
         rl.question(`Do you accept this mission? (y/n) `, secondAnswerMong);
-    } else if(answer === 'Cung') {
-        console.log(`As Cung you are the Seer`);
+    } else if(role === 'Seer') {
+        console.log(`As ${answer}, ${role} you are the Seer`);
         rl.question(`Do you accept this mission? (y/n) `, secondAnswerCung);
     }
 }
@@ -51,38 +59,56 @@ const secondAnswerCung = (answer) => {
 
 const thirdAnswerKent = (answer) => {
     if(answer === 'Kent') {
-        console.log(`Gameover, Kent commited senpuku!`);
+        console.log(`Gameover, ${answer} commited senpuku!`);
         rl.close();
     } else if(answer === 'Mong') {
-        console.log(`Congrats! You win!`);
+        console.log(`Congrats ${answer}! You win!`);
+        rl.close();
     } else if(answer === 'Cung') {
-        console.log(`Congrats! You win!`);
+        console.log(`Congrats ${answer}! You win!`);
+        rl.close();
     }
-    rl.close();
+
 }
 
 const thirdAnswerMong = (answer) => {
     if(answer === 'Kent') {
-        console.log(`Congrats! You win!`);
+        console.log(`Congrats ${answer}! You win!`);
         rl.close();
     } else if(answer === 'Mong') {
-        console.log(`You lose! You don't trust yourself!`);
+        console.log(`You lose, ${answer}! You don't trust yourself, the villager!`);
+        rl.close();
     } else if(answer === 'Cung') {
-        console.log(`You lose! Cung is the Seer!`);
+        console.log(`You lose, ${answer}! ${answer} is the Seer!`);
+        rl.close();
     }
-    rl.close();
 }
 
 const thirdAnswerCung = (answer) => {
     if(answer === 'Kent') {
-        console.log(`Gameover, Kent kills you before you tell the other Villagers`);
+        console.log(`Gameover, ${answer} kills you before you tell the other Villagers.`);
         rl.close();
     } else if(answer === 'Mong') {
-        console.log(`Congrats! Mong helps you kill Kent, the werewofl!`);
+        console.log(`Congrats! ${answer} helps you kill Kent, the werewofl!`);
+        rl.close();
     } else if(answer === 'Cung') {
-        console.log(`You already know you're not the werewolf!`);
+        console.log(`You already know you're not the werewolf! Now you and Mong are dead!`);
+        rl.close();
     }
-    rl.close();
+}
+// rl.question(`Choose a character: Kent, Mong, or Cung `, firstAnswer);
+
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
+const randomizeRole = () => {
+    const max = 3;
+    const role = getRandomInt(max);
+    if(role === 1) return 'Werewolf'
+    if(role === 2) return 'Seer'
+    if(role === 3) return 'Villager'
 }
 
 rl.question(`Choose a character: Kent, Mong, or Cung `, firstAnswer);
