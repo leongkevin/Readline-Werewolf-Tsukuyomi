@@ -6,55 +6,89 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+
+
+
+// 1
+console.log(`Welcome to Werewolf Tsukuyomi.`)
+
+// 2
+const instructions = () => {
+    console.log(`You are now bound to infinite Tsukuyomi until you complete your mission.`);
+}
+setTimeout(instructions, 1000);
+
+// 3
+const chooseCharacter = () => {
+    rl.question(`Choose a character: Kent, Mong, or Cung. `, firstAnswer);
+}
+setTimeout(chooseCharacter, 4000);
+
+// 4
 let yourCharacter;
 
 const firstAnswer = (answer) => {
 
     yourCharacter = answer;
 
-    console.log(`Your secret role is ${firstRole}`);
+    console.log(`Your secret role is ${firstRole}.`);
 
-    if(firstRole === 'Werewolf') {
-        console.log(`As ${answer}, ${firstRole} your mission is to kill the rest of the villagers before they find out who you are.`);
-        rl.question(`Do you accept this mission? (Y/N) `, secondAnswerWerewolf);
-    } else if(firstRole === 'Villager') {
-        console.log(`As ${answer}, ${firstRole} your missing is to identify the werewolf is before they kill you. `);
-        rl.question(`Do you accept this mission? (Y/N) `, secondAnswerVillager);
-    } else if(firstRole === 'Seer') {
-        console.log(`As ${answer}, ${firstRole} your mission is to alert the villagers about the identity of the werewolf without the werewolf finding out who you are.`);
-        rl.question(`Do you accept this mission? (Y/N) `, secondAnswerSeer);
+    const yourRole = () => {
+
+        const firstQuestion = `${answer}, do you accept this mission? (Y/N)`
+
+        if(firstRole === 'Werewolf') {
+
+            rl.question(`As ${answer}, ${firstRole} your mission is to kill the rest of the villagers before they find out who you are. ${firstQuestion} `, secondAnswerWerewolf)
+
+        } else if(firstRole === 'Villager') {
+
+            rl.question(`As ${answer}, ${firstRole} your missing is to identify the werewolf is before they kill you. ${firstQuestion} `, secondAnswerVillager);
+
+        } else if(firstRole === 'Seer') {
+
+            rl.question(`As ${answer}, ${firstRole} your mission is to alert the villagers about the identity of the werewolf without the werewolf finding out who you are. ${firstQuestion} `, secondAnswerSeer);
+
+        }
     }
+
+    setTimeout(yourRole, 1000);
 }
+
+// 5
+
+const acceptMission = `There's no time to waste!`;
+const declineMissionNotWerewolf = `That's too bad...after the full moon, the werewolf eats all the villagers including you...`
+const declineMissionWerewolf = `The villagers gather their pitchforks against you...`
 
 const secondAnswerWerewolf = (answer) => {
     if(answer.toLowerCase() === 'Y'.toLowerCase()) {
-        console.log(`There's no time to waste!`);
-        rl.question(`Who would you like to kill? `, thirdAnswerWerewolf);
+        rl.question(`${acceptMission} Who would you like to kill? `, thirdAnswerWerewolf);
     } else if(answer.toLowerCase() === 'N'.toLowerCase()) {
-        console.log(`That is too bad...A week later....the villagers find out you're the werewolf and hang you.`);
+        console.log(`{${declineMissionWerewolf}}`);
         rl.close();
     }
 }
 
 const secondAnswerVillager = (answer) => {
     if(answer.toLowerCase() === 'Y'.toLowerCase()) {
-        console.log(`There's no time to waste!`);
-        rl.question(`Who do you think is the werewolf? `, thirdAnswerVillager);
+        rl.question(`${acceptMission} Who would you like to pick as the werewolf? `, thirdAnswerVillager);
     } else if(answer.toLowerCase() === 'N'.toLowerCase()) {
-        console.log(`That is too bad...A week later....the werewolf eats you.`);
+        console.log(`${declineMissionNotWerewolf}`);
         rl.close();
     }
 }
 
 const secondAnswerSeer = (answer) => {
     if(answer.toLowerCase() === 'Y'.toLowerCase()) {
-        console.log(`There's no time to waste!`);
-        rl.question(`Who would you like to tell who the werewolf is?  `, thirdAnswerSeer);
+        rl.question(`${acceptMission} Who would you like to tell about the identity of the werewolf? `, thirdAnswerSeer);
     } else if(answer.toLowerCase() === 'N'.toLowerCase()) {
-        console.log(`That is too bad...A week later....the werewolf eats you.`);
+        console.log(`${declineMissionNotWerewolf}`);
         rl.close();
     }
 }
+
+// 6
 
 const thirdAnswerWerewolf = (answer) => {
     if(answer.toLowerCase() === yourCharacter.toLowerCase()) {
@@ -95,20 +129,6 @@ const thirdAnswerSeer = (answer) => {
     }
 }
 
-console.log(`Welcome to Werewolf Tsukuyomi.`)
-
-
-
-const instructions = () => { console.log(`You are now bound to infinite Tsukuyomi until you complete your mission.`) }
-
-setTimeout(instructions, 2000);
-
-
-
-const firstQuestion = () => { rl.question(`Choose a character: Kent, Mong, or Cung. `, firstAnswer)}
-
-setTimeout(firstQuestion, 4000);
-
 
 // Below is not so random roles
 
@@ -140,6 +160,27 @@ const randomizeRole = (max) => {
 
 const max = 3;
 const firstRole = randomizeRole(max);
+
+const kent = {};
+const mong = {};
+const cung = {};
+
+if(yourCharacter === 'Kent') {
+    yourCharacter['role'] = firstRole;
+    mong['role'] = secondRole;
+    cung['role'] = thirdRole;
+} else if(yourCharacter === 'Mong') {
+    yourCharacter['role'] = firstRole;
+    kent['role'] = secondRole;
+    cung['role'] = thirdRole;
+} else if(yourCharacter === 'Cung') {
+    yourCharacter['role'] = firstRole;
+    kent['role'] = secondRole;
+    mong['role'] = thirdRole;
+}
+
+console.log(mong)
+
 
 // console.log(firstRole)
 // console.log(secondRole)
