@@ -27,9 +27,9 @@ function getRandomInt(max) {
 }
 
 const arrOfCharacters = [
-    Kent = {name: 'Kent'},
-    Mong = {name: 'Mong'},
-    Cung = {name: 'Cung'}
+    Kent = {character: 'Kent'},
+    Mong = {character: 'Mong'},
+    Cung = {character: 'Cung'}
 ];
 
 
@@ -98,16 +98,44 @@ const firstAnswer = (answer) => {
         thirdRole = 'Villager';
     }
 
+    let startIndex;
+    const takenIndexArr = [];
 
     for(let i = 0; i < arrOfCharacters.length; i++) {
         currentObj = arrOfCharacters[i];
         for(let key in currentObj) {
-            if(currentObj.name === answer) {
+            if(currentObj.character === answer) {
                 currentObj['role'] = yourRole;
-                }
-            }
+                startIndex = i;
+                takenIndexArr.push(startIndex);
+            } else currentObj['role'] = '?';
+        }
     }
-    console.log(arrOfCharacters)
+
+    console.log(arrOfCharacters);
+
+    console.log(startIndex);
+
+    // yourCharacter['index'] = startIndex;
+
+    // console.log(arrOfCharacters);
+    let startRandomIndex = getRandomInt(length) - 1
+
+    if(startIndex < (arrOfCharacters.length * .5) + .5) {
+
+        for(let i = startRandomIndex; i < (arrOfCharacters.length - startRandomIndex); i++) {
+            currentObj = arrOfCharacters[i];
+            for(let key in currentObj) {
+                // if(i === currentObj.character !== answer) {
+                //     currentObj['role'] = secondRole
+                // } else currentObj['role'] = '?';
+            }
+        }
+    } else {
+
+    }
+
+
 
     console.log(`Your secret role is ${yourRole}.`);
 
@@ -224,46 +252,3 @@ const thirdAnswerSeer = (answer) => {
         rl.close();
     }
 }
-
-
-
-// if(yourCharacter === 'Kent') {
-//     yourCharacter.role = firstRole;
-//     Mong.role = secondRole;
-//     Cung.role = thirdRole;
-// } else if(yourCharacter === 'Mong') {
-//     yourCharacter.role = firstRole;
-//     Kent.role = secondRole;
-//     Cung.role = thirdRole;
-// } else if(yourCharacter === 'Cung') {
-//     yourCharacter.role = firstRole;
-//     Kent.role = secondRole;
-//     Mong.role = thirdRole;
-// }
-
-// console.log(Kent)
-
-// console.log(firstRole)
-// console.log(secondRole)
-// console.log(thirdRole)
-
-
-// Below is an attempt at completely random roles
-
-// const randomizeRole = (max) => {
-//     const role = getRandomInt(max);
-//     if(role === 0) return 'Werewolf';
-//     if(role === 1) return 'Seer';
-//     if(role === 2) return 'Villager';
-// }
-
-// const firstRole = randomizeRole(3);
-
-// const secondRole = randomizeRole(3);
-
-// const thirdRole = randomizeRole(3);
-
-// console.log(firstRole)
-// console.log(secondRole)
-// console.log(thirdRole)
-// rl.close();
