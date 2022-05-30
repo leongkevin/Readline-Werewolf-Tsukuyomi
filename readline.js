@@ -54,10 +54,9 @@ const combinations = combinFunc(length);
 let yourRole;
 let secondRole;
 let thirdRole;
-const arrayOfRoles = [yourRole, secondRole, thirdRole];
 
 const chooseCharacter = () => {
-    console.log(arrOfCharacters)
+    console.log(arrOfCharacters);
     rl.question(`Choose a character: `, firstAnswer);
 }
 setTimeout(chooseCharacter, 2500);
@@ -70,6 +69,7 @@ let yourCharacter;
 const firstAnswer = (answer) => {
 
     yourCharacter = answer;
+    const arrayOfRoles = [];
 
     const role = getRandomInt(combinations);
     if(role === 0) {
@@ -97,9 +97,11 @@ const firstAnswer = (answer) => {
         secondRole = 'Werewolf';
         thirdRole = 'Villager';
     }
+    arrayOfRoles.push(yourRole, secondRole, thirdRole);
+
 
     let startIndex;
-    const takenIndexArr = [];
+
 
     for(let i = 0; i < arrOfCharacters.length; i++) {
         currentObj = arrOfCharacters[i];
@@ -107,32 +109,82 @@ const firstAnswer = (answer) => {
             if(currentObj.character === answer) {
                 currentObj['role'] = yourRole;
                 startIndex = i;
-                takenIndexArr.push(startIndex);
+                // takenIndexArr.push(startIndex);
             } else currentObj['role'] = '?';
         }
     }
 
-    console.log(arrOfCharacters);
+    console.log(arrOfCharacters); // After yourRole is assigned and before the others are assigned
 
-    console.log(startIndex);
+    const startRandomIndex = getRandomInt(length);
 
-    // yourCharacter['index'] = startIndex;
+    const takenRoles = [yourRole];
 
-    // console.log(arrOfCharacters);
-    let startRandomIndex = getRandomInt(length) - 1
+    if(startRandomIndex + 1 < (arrOfCharacters.length * .5) + .5) {
 
-    if(startIndex < (arrOfCharacters.length * .5) + .5) {
+        const nextIndex = arrayOfRoles.indexOf(yourRole) + 1;
 
         for(let i = startRandomIndex; i < (arrOfCharacters.length - startRandomIndex); i++) {
             currentObj = arrOfCharacters[i];
             for(let key in currentObj) {
-                // if(i === currentObj.character !== answer) {
-                //     currentObj['role'] = secondRole
-                // } else currentObj['role'] = '?';
+                if(currentObj['role'] === '?') {
+                    if(nextIndex !== arrOfCharacters.length - 1) {
+                        currentObj['role'] = arrayOfRoles[nextIndex];
+                        takenRoles.push(arrayOfRoles[nextIndex])
+                    }
+                }
             }
         }
+
+
+        for(let i = 0; i < arrayOfRoles.length; i++) {
+            currIndex = arrayOfRoles[i]
+            if(!takenRoles.includes(currIndex)) {
+                takenRoles.push(currIndex)
+            }
+        }
+        // Assign last unused role to last chracter without a role
+
+        for(let i = 0; i < arrOfCharacters.length; i++) {
+            currentObj = arrOfCharacters[i];
+            for(let key in currentObj) {
+                if(currentObj['role'] === '?') {
+                    currentObj['role'] = takenRoles[takenRoles.length - 1];
+                }
+            }
+        }
+
     } else {
 
+        const nextIndex = arrayOfRoles.indexOf(yourRole) + 1;
+
+        for(let i = arrOfCharacters.length - 1; i > 0; i--) {
+            currentObj = arrOfCharacters[i];
+            for(let key in currentObj) {
+                if(currentObj['role'] === '?') {
+                    if(nextIndex !== arrOfCharacters.length - 1) {
+                        currentObj['role'] = arrayOfRoles[nextIndex];
+                    }
+                }
+            }
+        }
+
+        for(let i = 0; i < arrayOfRoles.length; i++) {
+            currIndex = arrayOfRoles[i]
+            if(!takenRoles.includes(currIndex)) {
+                takenRoles.push(currIndex)
+            }
+        }
+        // Assign last unused role to last chracter without a role
+
+        for(let i = 0; i < arrOfCharacters.length; i++) {
+            currentObj = arrOfCharacters[i];
+            for(let key in currentObj) {
+                if(currentObj['role'] === '?') {
+                    currentObj['role'] = takenRoles[takenRoles.length - 1];
+                }
+            }
+        }
     }
 
 
@@ -171,7 +223,7 @@ const secondAnswerWerewolf = (answer) => {
     if(answer.toLowerCase() === 'Y'.toLowerCase()) {
         rl.question(`${acceptMission} Who would you like to kill? `, thirdAnswerWerewolf);
     } else if(answer.toLowerCase() === 'N'.toLowerCase()) {
-        console.log(`{${declineMissionWerewolf}}`);
+        console.log(`${declineMissionWerewolf}`);
         rl.close();
     }
 }
