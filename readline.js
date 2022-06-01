@@ -36,8 +36,6 @@ const arrOfCharacters = [
 
 // Unquie combination of roles
 
-
-
 const length = arrOfCharacters.length;
 
 const combinFunc = (length) => {
@@ -273,7 +271,7 @@ const thirdAnswerVillager = (answer) => {
             console.log(`Gameover, ${answer}! You don't trust yourself, the villager!`);
         } else console.log(`Congratulations, ${answer} was a ${Kent.role}`);
         rl.close();
-    } else if(answer.toLowerCase() === yourCharacter.toLowerCase()) {
+    } else if(answer.toLowerCase() === 'Mong'.toLowerCase()) {
         if(yourCharacter === 'Villager') {
             console.log(`Gameover, ${answer}! You don't trust yourself, the villager!`);
         } else console.log(`Congratulations, ${answer} was a ${Mong.role}`);
@@ -297,7 +295,7 @@ const thirdAnswerSeer = (answer) => {
             console.log(`Gameover, ${answer}. You already know you're not the werewolf! Now you and other villagers are dead!`);
         } else console.log(`Congratulations, ${answer} was a ${Mong.role}`);
         rl.close();
-    } else if(answer.toLowerCase() === yourCharacter.toLowerCase()) {
+    } else if(answer.toLowerCase() === 'Cung'.toLowerCase()) {
         if(yourCharacter === 'Seer') {
             console.log(`Gameover, ${answer}. You already know you're not the werewolf! Now you and other villagers are dead!`);
         } else console.log(`Congratulations, ${answer} was a ${Cung.role}`);
